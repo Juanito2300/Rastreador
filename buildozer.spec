@@ -12,7 +12,11 @@ android.permissions = INTERNET,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION
 
 android.archs = arm64-v8a, armeabi-v7a
 
-requirements = python3,kivy,flask,plyer,requests,sqlalchemy,itsdangerous,jinja2,markupsafe,werkzeug
+# AGREGA pyjnius con versión específica y cython actualizado
+requirements = python3,kivy,flask,plyer,requests,sqlalchemy,itsdangerous,jinja2,markupsafe,werkzeug,pyjnius,cython
+
+# AGREGA estas líneas para usar python-for-android actualizado
+p4a.branch = develop
 
 orientation = portrait
 fullscreen = 1
