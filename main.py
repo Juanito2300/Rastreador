@@ -79,7 +79,7 @@ def validar_id(id_):
      
 @app.route("/")
 def index():
-    return render_template("mapa.html")
+    return render_template("index.html")
 
 
 @app.route("/registrar", methods=["POST"])
