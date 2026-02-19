@@ -33,11 +33,20 @@ def vincular():
     pareja_id = data.get("pareja_id")
 
     if not mi_id or not pareja_id:
-        return jsonify({"error": "Faltan datos"}), 400
+        return jsonify({"status": "ERROR", "msg": "Faltan datos"}), 400
 
+    # 🚨 Si alguno ya tiene pareja distinta
+    if mi_id in emparejamientos and emparejamientos[mi_id] != pareja_id:
+        return jsonify({"status": "YA_TIENES_PAREJA"})
+
+    if pareja_id in emparejamientos and emparejamientos[pareja_id] != mi_id:
+        return jsonify({"status": "OCUPADO"})
+
+    # Vincular
     emparejamientos[mi_id] = pareja_id
     emparejamientos[pareja_id] = mi_id
-    return jsonify({"status": "vinculado"})
+
+    return jsonify({"status": "OK"})
 
 @app.route('/ubicacion', methods=['POST'])
 def actualizar_ubicacion():
@@ -66,7 +75,8 @@ def obtener_ubicaciones(id_dispositivo):
 
     return jsonify({
         "yo": mi_ubicacion,
-        "pareja": pareja_ubicacion
+        "pareja": pareja_ubicacion,
+        "pareja_id": pareja_id
     })
 
      
