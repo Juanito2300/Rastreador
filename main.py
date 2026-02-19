@@ -35,6 +35,13 @@ def vincular():
     if not mi_id or not pareja_id:
         return jsonify({"status": "ERROR", "msg": "Faltan datos"}), 400
 
+    # 🔎 Verificar que ambos estén registrados
+    usuario1 = registrados.query.filter_by(id=mi_id).first()
+    usuario2 = registrados.query.filter_by(id=pareja_id).first()
+
+    if not usuario1 or not usuario2:
+        return jsonify({"status": "NO_REGISTRADO"})
+
     # 🚨 Si alguno ya tiene pareja distinta
     if mi_id in emparejamientos and emparejamientos[mi_id] != pareja_id:
         return jsonify({"status": "YA_TIENES_PAREJA"})
@@ -42,7 +49,7 @@ def vincular():
     if pareja_id in emparejamientos and emparejamientos[pareja_id] != mi_id:
         return jsonify({"status": "OCUPADO"})
 
-    # Vincular
+    # ✅ Vincular
     emparejamientos[mi_id] = pareja_id
     emparejamientos[pareja_id] = mi_id
 
